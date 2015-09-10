@@ -1,3 +1,4 @@
+import datetime
 from pymongo import MongoClient
 import boto.sqs
 import ast
@@ -29,6 +30,11 @@ while True:
 
         respuesta = ast.literal_eval(respuesta)
         respuesta = ast.literal_eval(respuesta['Message'])
+        list_domains = []
+        for domain in respuesta['mail']['destination']:
+            div = domain.split("@")
+            list_domains.append(div[1])
+        domains = {"domains": list_domains} 
         try:
             respuesta['delivery']['timestamp'] = datetime.datetime.\
                 strptime(respuesta['delivery']['timestamp'],
@@ -85,11 +91,11 @@ while True:
         notificacion.update(complaint)
         notificacion.update(mail)
         notificacion.update(respuesta)
+        notificacion.update(domains)
         # Guardamos en la BD
         db.status.insert(notificacion)
         # Borramos cola
-#        q.delete_message(m)
-
+        q.delete_message(m)
     except Exception, e:
         if "list index out of range" in str(e):
             print "FIN"

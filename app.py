@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import datetime
 import os
 from flask import Flask, url_for, redirect, render_template, request, abort
 from flask_sqlalchemy import SQLAlchemy
@@ -69,6 +70,7 @@ class Status(dbm.Document):
     bouncedRecipients = dbm.StringField()
     bounceType = dbm.StringField()
     feedbackId = dbm.StringField()
+    domains = dbm.StringField()
 # Setup Flask-Security
 user_datastore = SQLAlchemyUserDatastore(db, User, Role)
 security = Security(app, user_datastore)
@@ -124,10 +126,12 @@ class StatusView(ModelView):
                       'recipients',
                       'destination',
                       'notificationType',
-                      'timestamp']
+                      'timestamp',
+                      'domains']
     column_searchable_list = ['source',
                               'recipients',
                               'destination',
+                              'domains',
                               'notificationType']
     column_exclude_list = ['sendingAccountId',
                            'reportingMTA',
