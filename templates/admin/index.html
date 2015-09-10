@@ -1,0 +1,23 @@
+{% extends 'admin/master.html' %}
+{% block body %}
+{{ super() }}
+<div class="container">
+    <div class="row">
+        <div class="col-sm-10 col-sm-offset-1">
+            <h1>Notifiaciones SQS</h1>
+            <p class="lead">
+                Autentificación
+            </p>
+            <p>
+                Notificaciones SES AWS - Via SQS
+            </p>
+            {% if not current_user.is_authenticated() %}
+            <p>
+                <a class="btn btn-primary" href="{{ url_for('security.login') }}">Iniciar Sesión</a>
+            </p>
+            {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
+{% endblock body %}
