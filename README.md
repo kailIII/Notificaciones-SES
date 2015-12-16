@@ -1,4 +1,4 @@
-#Receptor de notificaciones SES a través de SQS V0.1
+#Receptor de notificaciones SES (AWS) a través de SQS (AWS) V0.1
 
 ### Resumen
 Sistema para recibir notificaciones SQS de SES
